@@ -20,6 +20,7 @@ syn case match
 " Comments {{{
 syn match kickstartComment "^\s*#.*$" contains=kickstartTodo
 syn keyword kickstartTodo TODO FIXME NOT XXX contained
+syn match kickstartString "\".*\""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
 " Base constructs and sectioning {{{
 syn match kickstartEquals "=" contained
@@ -30,7 +31,12 @@ syn region kickstartPrePost matchgroup=kickstartInclude start="^\s*%\(pre\|post\
 syn match kickstartPackageGroup "^@ .*"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
 " Options {{{
+"
 syn match kickstartOptionBOL "^\s*\zs\w\+\>" contains=kickstartOption,kickstartInstallMethod
+syn match kickstartBool "\<\(yes\|no\)\>"
+syn match kickstartPassword "$[0-9]$\S*"
+syn match kickstartNumber "=\=\<[0-9]*\>" contains=kickstartEquals
+syn match kickstartPassword "grub.pbkdf2.\S*"
 syn keyword kickstartOption autostep auth[config] bootloader contained
 syn keyword kickstartOption clearpart device[probe] driverdisk contained
 syn keyword kickstartOption firewall install interactive keyboard contained
@@ -38,15 +44,16 @@ syn keyword kickstartOption lang[support] lilo[check] logvol contained
 syn keyword kickstartOption mouse network part[ition] raid contained
 syn keyword kickstartOption reboot rootpw skipx text timezone contained
 syn keyword kickstartOption upgrade xconfig volgroup zerombr contained
+syn keyword kickstartOption sshpw user selinux reqpart services eula repo contained
 syn keyword kickstartInstallMethod cdrom harddrive nfs url contained
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
 " Options of options :-) {{{
 " authconfig
 syn match kickstartOption2 "\s\zs--\(enablemd5\|enablenis\|useshadow\|enableshadow\|enableldap\|enableldapauth\|enableldaptls\|enablekrb5\|enablehesiod\|hesiodrhs\|enablesmbauth\|enablecache\)\>"
-syn match kickstartOption2 "\s\zs--\(nisdomain\|nisserver\|ldapserver\|ldapbasedn\|krb5realm\|krb5adminserver\|krb5kdc\|smbservers\|smbworkgroup\)\>=\=" contains=kickstartEquals
+syn match kickstartOption2 "\s\zs--\(nisdomain\|nisserver\|ldapserver\|ldapbasedn\|krb5realm\|krb5adminserver\|krb5kdc\|smbservers\|smbworkgroup\|passalgo\)\>=\=" contains=kickstartEquals
 " bootloader and lilo
 syn match kickstartOption2 "\s\zs--\(uselilo\|linear\|nolinear\|lba32\|upgrade\)\>"
-syn match kickstartOption2 "\s\zs--\(append\|location\|password\|md5pass\)\>=\=" contains=kickstartEquals
+syn match kickstartOption2 "\s\zs--\(append\|location\|password\|md5pass\|timeout\|driveorder\)\>=\=" contains=kickstartEquals
 " clearpart
 syn match kickstartOption2 "\s\zs--\(all\|linux\|initlabel\)\>"
 syn match kickstartOption2 "\s\zs--\(drives\)\>=\=" contains=kickstartEquals
@@ -61,6 +68,7 @@ syn match kickstartOption2 "\s\zs--\(trust\|port\)\>=\=" contains=kickstartEqual
 " install
 syn match kickstartOption2 "\s\zs--\(partition\|server\|dir\)\>=\=" contains=kickstartEquals
 " keyboard
+syn match kickstartOption2 "\s\zs--\(vckeymap\)\>=\=" contains=kickstartEquals
 syn match kickstartKeyboard "\<\(be-latin1\|bg\|br-abnt2\|cf\|cz-lat2\)\>"
 syn match kickstartKeyboard "\<\(cz-us-qwertz\|de\|de-latin1\)\>"
 syn match kickstartKeyboard "\<\(de-latin1-nodeadkeys\|dk\|dk-latin1\)\>"
@@ -75,8 +83,13 @@ syn match kickstartKeyboard "\<\(sk-qwerty\|slovene\|speakup\)\>"
 syn match kickstartKeyboard "\<\(speakup-lt\|sv-latin1\|sg\|sg-latin1\)\>"
 syn match kickstartKeyboard "\<\(sk-querty\|slovene\|trq\|ua\|uk\|us\)\>"
 syn match kickstartKeyboard "\<\(us-acentos\)\>"
+syn match kickstartKeyboard "\<\(gb-extd\)\>"
+" timezone
+syn match kickstartTimezone "\<\([A-Z][a-z]*/[A-Z][a-z]*\)\>"
+" language
+syn match kickstartLang "\<[a-z][a-z]_[A-Z][A-Z]\>"
 " langsupport
-syn match kickstartOption2 "\s\zs--\(default\)\>=\=" contains=kickstartEquals
+syn match kickstartOption2 "\s\zs--\(default\|addsupport\)\>=\=" contains=kickstartEquals
 " logvol
 syn match kickstartOption2 "\s\zs--\(vgname\|size\|name\)\>=\=" contains=kickstartEquals
 " mouse
@@ -84,16 +97,17 @@ syn match kickstartOption2 "\s\zs--\(device\)\>"
 syn match kickstartOption2 "\s\zs--\(emulthree\)\>=\=" contains=kickstartEquals
 " network
 syn match kickstartOption2 "\s\zs--\(nodns\)\>"
-syn match kickstartOption2 "\s\zs--\(bootproto\|ip\|gateway\|nameserver\|netmask\|hostname\|url\)\>=\=" contains=kickstartEquals
+syn match kickstartOption2 "\s\zs--\(bootproto\|onboot\|ip\|gateway\|nameserver\|netmask\|hostname\|url\)\>=\=" contains=kickstartEquals
 " partition
 syn match kickstartOption2 "\s\zs--\(recommended\|grow\|noformat\|asprimary\|badblocks\)\>"
-syn match kickstartOption2 "\s\zs--\(size\|maxsize\|onpart\|usepart\|ondisk\|ondrive\|bytes-per-inode\|fstype\|start\|end\)\>=\=" contains=kickstartEquals
+syn match kickstartOption2 "\s\zs--\(size\|maxsize\|onpart\|usepart\|ondisk\|ondrive\|bytes-per-inode\|fstype\|start\|end\|label\)\>=\=" contains=kickstartEquals
 " raid
 syn match kickstartOption2 "\s\zs--\(level\|device\|spares\|fstype\|noformat\)\>=\=" contains=kickstartEquals
 " rootpw
 syn match kickstartOption2 "\s\zs--\(iscrypted\)\>"
 " timezone
 syn match kickstartOption2 "\s\zs--\(utc\)\>"
+syn match kickstartOption2 "\s\zs--\(ntpservers\)\>=\=" contains=kickstartEquals
 " xconfig
 syn match kickstartOption2 "\s\zs--\(noprobe\|startxonboot\)\>"
 syn match kickstartOption2 "\s\zs--\(card\|videoram\|monitor\|hsync\|vsync\|defaultdesktop\|resolution\|depth\)\>=\=" contains=kickstartEquals
@@ -101,6 +115,21 @@ syn match kickstartOption2 "\s\zs--\(card\|videoram\|monitor\|hsync\|vsync\|defa
 syn match kickstartPackageOption2 "\s\zs--\(resolvedeps\|ignoredeps\|ignoremissing\)\>"
 " pre and post
 syn match kickstartPrePostOption2 "\s\zs--\(interpreter\|nochroot\)\>"
+" sshpw
+syn match kickstartOption2 "\s\zs--\(user\)\>=\=" contains=kickstartEquals
+" user
+syn match kickstartOption2 "\s\zs--\(username\|gecos\|groups\)\>=\=" contains=kickstartEquals
+" services
+syn match kickstartOption2 "\s\zs--\(enabled\|disable\|disabledd\)\>=\=" contains=kickstartEquals
+" repo
+syn match kickstartOption2 "\s\zs--\(baseurl\)\>=\=" contains=kickstartEquals
+" eula
+syn match kickstartPrePostOption2 "\s\zs--\(agreed\)\>"
+" reqpart
+syn match kickstartPrePostOption2 "\s\zs--\(add-boot\)\>"
+" selinux
+syn match kickstartPrePostOption2 "\s\zs--\(permissive\|disabled\|enforcing\)\>"
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
 " Define the default highlighting {{{
 " For version 5.7 and earlier: Only when not done already
@@ -124,8 +153,14 @@ if version >= 508 || !exists("did_kickstart_syntax_inits")
   HiLink kickstartOption2           Identifier
   HiLink kickstartModuleType        kickstartEnum
   HiLink kickstartKeyboard          kickstartEnum
+  HiLink kickstartTimezone          kickstartEnum
   HiLink kickstartPackageGroup      Special
   HiLink kickstartEnum              Constant
+  HiLink kickstartBool				Boolean
+  HiLink kickstartLang				Constant
+  HiLink kickstartNumber			Number
+  HiLink kickstartString			String
+  HiLink kickstartPassword			String
   delcommand HiLink
 endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
