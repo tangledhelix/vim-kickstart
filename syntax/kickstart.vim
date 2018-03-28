@@ -112,7 +112,7 @@ syn match kickstartOption2 "\s\zs--\(ntpservers\)\>=\=" contains=kickstartEquals
 syn match kickstartOption2 "\s\zs--\(noprobe\|startxonboot\)\>"
 syn match kickstartOption2 "\s\zs--\(card\|videoram\|monitor\|hsync\|vsync\|defaultdesktop\|resolution\|depth\)\>=\=" contains=kickstartEquals
 " packages
-syn match kickstartPackageOption2 "\s\zs--\(resolvedeps\|ignoredeps\|ignoremissing\)\>"
+syn match kickstartPackageOption2 "\s\zs--\(default\|resolvedeps\|excludedocs\|ignoredeps\|ignoremissing\|multilib\|nocore\)\>"
 " pre and post
 syn match kickstartPrePostOption2 "\s\zs--\(interpreter\|nochroot\)\>"
 " sshpw
