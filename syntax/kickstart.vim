@@ -96,8 +96,8 @@ syn match kickstartOption2 "\s\zs--\(vgname\|size\|name\)\>=\=" contains=kicksta
 syn match kickstartOption2 "\s\zs--\(device\)\>"
 syn match kickstartOption2 "\s\zs--\(emulthree\)\>=\=" contains=kickstartEquals
 " network
-syn match kickstartOption2 "\s\zs--\(nodns\)\>"
-syn match kickstartOption2 "\s\zs--\(bootproto\|onboot\|ip\|gateway\|nameserver\|netmask\|hostname\|url\)\>=\=" contains=kickstartEquals
+syn match kickstartOption2 "\s\zs--\(nodns\|activate\|nodefroute\|nodns\|noipv4\|noipv6\)\>"
+syn match kickstartOption2 "\s\zs--\(bootproto\|device\|onboot\|ip\|ipv6\|gateway\|ipv6gateway\|nameserver\|netmask\|hostname\|ethtool\|essid\|wepkey\|wpakey\|dhcpclass\|mtu\|bondslaves\|bondopts\|vlanid\|interfacename\|teamslaves\|teamconfig\|bridgeslaves\|bridgeopts\|url\)\>=\=" contains=kickstartEquals
 " partition
 syn match kickstartOption2 "\s\zs--\(recommended\|grow\|noformat\|asprimary\|badblocks\)\>"
 syn match kickstartOption2 "\s\zs--\(size\|maxsize\|onpart\|usepart\|ondisk\|ondrive\|bytes-per-inode\|fstype\|start\|end\|label\)\>=\=" contains=kickstartEquals
