@@ -39,7 +39,7 @@ syn match kickstartNumber "=\=\<[0-9]*\>" contains=kickstartEquals
 syn match kickstartPassword "grub.pbkdf2.\S*"
 syn keyword kickstartOption autostep auth[config] bootloader contained
 syn keyword kickstartOption clearpart device[probe] driverdisk contained
-syn keyword kickstartOption firewall install interactive keyboard contained
+syn keyword kickstartOption firewall firstboot install interactive keyboard contained
 syn keyword kickstartOption lang[support] lilo[check] logvol contained
 syn keyword kickstartOption mouse network part[ition] raid contained
 syn keyword kickstartOption reboot rootpw skipx text timezone contained
@@ -65,6 +65,8 @@ syn match kickstartOption2 "\s\zs--\(type\)\>=\=" contains=kickstartEquals
 " firewall
 syn match kickstartOption2 "\s\zs--\(high\|medium\|disabled\|dhcp\|ssh\|telnet\|smtp\|http\|ftp\)\>"
 syn match kickstartOption2 "\s\zs--\(trust\|port\)\>=\=" contains=kickstartEquals
+" firstboot
+syn match kickstartOption2 "\s\zs--\(enable\|enabled\|disable\|disabled\|reconfig\)\>"
 " install
 syn match kickstartOption2 "\s\zs--\(partition\|server\|dir\)\>=\=" contains=kickstartEquals
 " keyboard
