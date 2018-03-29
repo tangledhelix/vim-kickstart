@@ -48,8 +48,8 @@ syn keyword kickstartOption sshpw user selinux reqpart services eula repo contai
 syn keyword kickstartInstallMethod cdrom harddrive nfs url contained
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
 " Options of options :-) {{{
-" authconfig
-syn match kickstartOption2 "\s\zs--\(enablemd5\|enablenis\|useshadow\|enableshadow\|enableldap\|enableldapauth\|enableldaptls\|enablekrb5\|enablehesiod\|hesiodrhs\|enablesmbauth\|enablecache\)\>"
+" auth or authconfig
+syn match kickstartOption2 "\s\zs--\(enablemd5\|enablenis\|useshadow\|enableshadow\|enableldap\|enableldapauth\|enableldaptls\|enablekrb5\|enablehesiod\|hesiodlhs\|hesiodrhs\|enablesmbauth\|enablecache\)\>"
 syn match kickstartOption2 "\s\zs--\(nisdomain\|nisserver\|ldapserver\|ldapbasedn\|krb5realm\|krb5adminserver\|krb5kdc\|smbservers\|smbworkgroup\|passalgo\)\>=\=" contains=kickstartEquals
 " bootloader and lilo
 syn match kickstartOption2 "\s\zs--\(uselilo\|linear\|nolinear\|lba32\|upgrade\)\>"
