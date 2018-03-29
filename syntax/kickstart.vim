@@ -118,7 +118,8 @@ syn match kickstartPrePostOption2 "\s\zs--\(interpreter\|nochroot\)\>"
 " sshpw
 syn match kickstartOption2 "\s\zs--\(user\)\>=\=" contains=kickstartEquals
 " user
-syn match kickstartOption2 "\s\zs--\(username\|gecos\|groups\)\>=\=" contains=kickstartEquals
+syn match kickstartOption2 "\s\zs--\(lock\|iscrypted\|plaintext\)\>"
+syn match kickstartOption2 "\s\zs--\(name\|username\|gecos\|groups\|homedir\|password\|shell\|uid\|gid\)\>=\=" contains=kickstartEquals
 " services
 syn match kickstartOption2 "\s\zs--\(enabled\|disable\|disabledd\)\>=\=" contains=kickstartEquals
 " repo
